@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Listar empleados por Departamento {% endblock title %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+<div class="container text-center">
+    <h3>Todos los empleados del departamento</h3>
+</div>
+<br>
+<div class="container">
+
+
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Número Doc</th>
+                <th scope="col">Departamento</th>
+                <th scope="col">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for empleado in empleados %}
+            <tr>
+                <td>{{ empleado.nombre }}</td>
+                <td>{{ empleado.apellido }}</td>
+                <td>{{ empleado.nrodoc }}</td>
+                <td>{{ empleado.departamento }}</td>
+                <td><a href="{% url 'Empleado_App:empleado_detail' empleado.id  %}" class="btn btn-primary ms-2">Ver</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Div paginacion -->
+    {% if is_paginated %}
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">Primero</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            </li>
+            {% endif %}
+
+            {% for i in paginator.page_range %}
+            {% if i == page_obj.number %}
+            <li class="page-item active" aria-current="page">
+              <a class="page-link" href="#">{{ i }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+            </li>
+             {% endif %}
+
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a>
+            </li>
+            {% endif %}
+
+
+
+
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock content %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Listar Departamentos {% endblock title %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+<div class="container text-center">
+    <h3>Todos los Departamentos registrados</h3>
+</div>
+<br>
+{% if messages %}
+    {% include 'includes/messages.html' %}
+{% endif %}
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-3">
+            <form method="get" class="d-flex">
+                {% csrf_token %}
+                <input type="text" id="kword_depto" name="kword_depto" class="form-control" placeholder="Buscar Departamento" aria-label="Buscar Departamento">
+                <button type="submit"  class="btn btn-primary ms-2">Buscar</button>
+            </form>
+        </div>
+    </div>
+
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Nombre Corto</th>
+                <th scope="col">Vigente</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for depto in departamentos %}
+            <tr>
+                <td>{{ depto.nombre }}</td>
+                <td>{{ depto.nombre_corto }}</td>
+                <td>{{ depto.vigente }}</td>
+
+                <td><a href="{% url 'Empleado_App:empleados_area' depto.nombre_corto  %}" class="btn btn-primary ms-2">Ver Empleados</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Div paginacion -->
+    {% if is_paginated %}
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">Primero</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            </li>
+            {% endif %}
+
+            {% for i in paginator.page_range %}
+            {% if i == page_obj.number %}
+            <li class="page-item active " aria-current="page">
+              <a class="page-link" href="#">{{ i }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+            </li>
+             {% endif %}
+
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a>
+            </li>
+            {% endif %}
+
+
+
+
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock content %}

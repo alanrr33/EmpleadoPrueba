@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+    <title>pruebas</title>
+</head>
+<body>
+    <h1>Listando items</h1>
+    <h1 class="ejemplo1">ej1</h1>
+    <h1 class="ejemplo2">ej2</h1>
+    <ul>
+        {% for prueba in lista_prueba %}
+            <li>
+                {{ prueba.titulo }}
+                {{ prueba.subtitulo }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <button type="button" class="success button">Guardar</button>
+    <button type="button" class="alert button">Borrar</button>
+</body>
+</html>

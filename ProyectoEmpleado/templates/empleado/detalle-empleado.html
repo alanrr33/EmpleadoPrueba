@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+{% endblock head %}
+
+{% block title %} Detalle empleado {% endblock title %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+<div class="container text-center">
+    <h3>Detalle empleados</h3>
+
+
+</div>
+<br>
+
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 18rem;">
+        {% if empleado.avatar %}
+          <img src="{{ empleado.avatar.url }}"  class="card-img-top" alt="">
+          {%else%}
+          <img src="https://picsum.photos/200/300/?random" class="card-img-top" alt="">
+          {%endif%}
+      <div class="card-body">
+        <h5 class="card-title text-primary ">{{ empleado.nombre_completo }} ({{ empleado.nrodoc }})</h5>
+          <h6 class="card-title text-danger">{{empleado.get_trabajo_display}}</h6>
+        <p class="card-text">
+          <p>{{ empleado.resumen|safe }}</p>
+
+          </p>
+      </div>
+      <ul class="list-group list-group-flush">
+          {% for habilidad in empleado.habilidades.all %}
+            <li class="list-group-item text-success" >{{ habilidad.habilidad }}</li>
+          {% endfor %}
+      </ul>
+      <div class="card-body">
+        <h6 class="card-title text-primary">Área: {{ empleado.departamento.nombre_corto }}</h6>
+      </div>
+    </div>
+</div>
+
+{% endblock content %}

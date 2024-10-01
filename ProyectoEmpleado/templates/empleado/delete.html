@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Delete Empleado {% endblock title %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+<div class="container text-center">
+    <h3>¿Desea borrar el empleado {{ object.nombre_completo }}?</h3>
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+
+        <button type="submit" class="btn btn-danger ms-2">Borrar</button>
+    </form>
+</div>
+
+{% endblock content %}

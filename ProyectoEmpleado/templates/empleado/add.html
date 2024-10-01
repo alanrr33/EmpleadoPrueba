@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Crear empleado {% endblock title %}
+
+{% block content %}
+
+{% include 'includes/header.html' %}
+
+
+<div class="container text-center">
+    <h1> Crear empleado </h1>
+</div>
+<br>
+<div class="container ">
+    <div class="form-group">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+         {{ form.as_p }}
+
+        <button type="submit"  class="btn btn-primary ms-2">Crear</button>
+    </form>
+    </div>
+</div>
+
+{% endblock content %}
+
